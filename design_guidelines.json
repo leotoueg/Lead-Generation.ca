@@ -1,0 +1,130 @@
+{
+  "theme": "dark",
+  "brand": "Cherry Tree Agency",
+  "typography": {
+    "headings": {
+      "family": "Anton, Impact, sans-serif",
+      "style": "uppercase, highly condensed, ultra-bold",
+      "weights": ["400"],
+      "tracking": "tracking-tighter",
+      "line_height": "leading-[0.9]",
+      "usage": "Use for H1, H2, H3. Crucial for the 'Alex Hormozi' high-converting masculine feel. Always add 'uppercase' class."
+    },
+    "body": {
+      "family": "Inter, Manrope, sans-serif",
+      "style": "clean, geometric, highly legible",
+      "weights": ["400", "500", "600"],
+      "tracking": "tracking-normal",
+      "line_height": "leading-relaxed",
+      "usage": "Use for all body text, forms, and small UI labels to provide 'Apple-like' precision contrast."
+    }
+  },
+  "colors": {
+    "background": {
+      "primary": "#050505",
+      "secondary": "#0A0A0A",
+      "surface": "#111111"
+    },
+    "brand": {
+      "primary": "#2C5CE5",
+      "secondary": "#2E5BFF",
+      "accent": "#00E5FF"
+    },
+    "text": {
+      "primary": "#FFFFFF",
+      "secondary": "#A1A1AA",
+      "muted": "#71717A"
+    },
+    "borders": {
+      "default": "rgba(255, 255, 255, 0.1)",
+      "highlight": "rgba(44, 92, 229, 0.3)"
+    },
+    "gradients": {
+      "primary_glow": "linear-gradient(135deg, #2C5CE5 0%, #00E5FF 100%)",
+      "surface_fade": "linear-gradient(180deg, rgba(17, 17, 17, 0) 0%, #111111 100%)"
+    }
+  },
+  "visual_enhancers": {
+    "shadows": {
+      "glow_primary": "0 0 40px -10px rgba(44, 92, 229, 0.4)",
+      "glow_accent": "0 0 30px -5px rgba(0, 229, 255, 0.3)"
+    },
+    "glassmorphism": {
+      "surface": "backdrop-blur-xl bg-white/5 border border-white/10",
+      "heavy": "backdrop-blur-2xl bg-black/70 border-b border-white/10"
+    },
+    "textures": "Use subtle noise/grain overlay strictly on black backgrounds to remove digital flatness."
+  },
+  "grids_and_layouts": {
+    "spacing_system": "Use generous padding: p-8 to p-12 for cards, py-24 to py-32 for sections. Let elements breathe.",
+    "bento_grid": "For the 'What You Get' section, use a 3-column bento grid (desktop), 2-col (tablet), 1-col (mobile). The primary features should span 2 columns.",
+    "timeline": "Vertical staggered layout for the 'Process' section with a connecting 1px glowing line.",
+    "alignment": "Left-align dense text, forms, and grids. Center-align hero and major CTAs to command attention."
+  },
+  "motion": {
+    "scroll": "Use @studio-freight/lenis for smooth, momentum-based scrolling.",
+    "hero_reveal": "Masked line-by-line text reveal on H1 using framer-motion (initial: y: 100%, opacity: 0 -> animate: y: 0, opacity: 1).",
+    "scroll_reveals": "Fade up and slightly scale in (0.95 -> 1) for cards and sections as they enter the viewport.",
+    "micro_interactions": "Hover states on buttons should subtly scale up (scale-105), increase glow, and lighten text."
+  },
+  "sections_and_components": {
+    "header": "Logo only, NO navigation menu. Sticky on scroll with heavy glassmorphism. Never transparent over scrolling content.",
+    "hero": "Large kinetic H1, subheadline, embedded VSL (Video Sales Letter). Primary CTA 'Book Your Strategy Call', Secondary CTA 'Watch The Video'. Social proof row below.",
+    "trust_bar": "Slow continuous marquee (react-fast-marquee) with pale/outlined text showing services: Professionally Filmed Ads • Google Ads • CRM Automation...",
+    "comparison": "Why We're Different. Split layout. Traditional (red/grey, negative) vs Cherry Tree (Royal Blue glow, premium icons, positive).",
+    "process_timeline": "Vertical timeline: Apply -> Strategy Call -> We Fly Out -> Film -> Launch -> Scale. Scroll-triggered line fills.",
+    "testimonials": "4 horizontal video testimonial cards with a modal playback (Play icon overlay).",
+    "feature_grid": "12-item bento grid for 'What You Get'. Crisp icons, dark surface cards, 1px border, blue hover glows.",
+    "checklist": "Ideal vs Not Ideal. Use Green checkmarks vs Red crosses. High contrast list.",
+    "faq": "Shadcn Accordion. Minimal borders, large typography.",
+    "final_cta_form": "Massive appointment form. Fields: Owner Name, Company, Email, Phone, Service, Revenue, Postal Code, Website, Notes. 'Request Strategy Call' button with primary gradient and pulse."
+  },
+  "accessibility": {
+    "contrast": "Ensure text over gradients meets APCA standards. Use white text (#FFF) for primary, off-white (#A1A1AA) for secondary.",
+    "focus": "All form inputs must have a highly visible focus ring: focus:ring-2 focus:ring-[#2C5CE5].",
+    "motion": "Respect prefers-reduced-motion media query.",
+    "testing": "All interactive elements (buttons, inputs) MUST have data-testid attributes (e.g., data-testid='hero-cta-button')."
+  },
+  "image_urls": {
+    "logo": {
+      "url": "https://customer-assets-0z36b82j.emergentagent.net/job_growth-system-setup/artifacts/t86rl3bw_image.png",
+      "description": "Cherry Tree Agency Logo (Blue C with tree)",
+      "placement": "Header and Footer"
+    },
+    "vsl_thumbnail_or_crew": {
+      "url": "https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "description": "Professional RED camera crew outdoors",
+      "placement": "VSL Placeholder / Process Section"
+    },
+    "crew_action": {
+      "url": "https://images.unsplash.com/photo-1632187981988-40f3cbaeef5e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzJ8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjB2aWRlbyUyMHByb2R1Y3Rpb24lMjBjYW1lcmElMjBjcmV3fGVufDB8fHx8MTc4NDg2MDg4MHww&ixlib=rb-4.1.0&q=85",
+      "description": "Camera crew setup",
+      "placement": "Process Section / Fly Out"
+    },
+    "contractor_testimonial_1": {
+      "url": "https://images.unsplash.com/photo-1672748341520-6a839e6c05bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwxfHxjb25zdHJ1Y3Rpb24lMjBjb250cmFjdG9yJTIwc21pbGluZyUyMHBvcnRyYWl0fGVufDB8fHx8MTc4NDg2MDg4MHww&ixlib=rb-4.1.0&q=85",
+      "description": "Smiling contractor in red hard hat",
+      "placement": "Testimonials Grid"
+    },
+    "contractor_testimonial_2": {
+      "url": "https://images.unsplash.com/photo-1646227655685-a530813759b3?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxOTF8MHwxfHNlYXJjaHwzfHxjb25zdHJ1Y3Rpb24lMjBjb250cmFjdG9yJTIwc21pbGluZyUyMHBvcnRyYWl0fGVufDB8fHx8MTc4NDg2MDg4MHww&ixlib=rb-4.1.0&q=85",
+      "description": "Smiling contractor in white hard hat",
+      "placement": "Testimonials Grid"
+    }
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You are building a site in Javascript (.js, .jsx), NOT Typescript. Do not output .tsx or .ts files.",
+    "Ensure dark mode is fully forced. Use very dark backgrounds (#050505, #0A0A0A) contrasting sharply with Royal Blue (#2C5CE5).",
+    "Do NOT apply a universal transition (e.g., transition: all). Add specific transitions to avoid breaking framer-motion.",
+    "Do NOT center align the main app container. This disrupts reading flow. Keep text naturally left-aligned unless explicitly centered (e.g., Hero).",
+    "Never use generic AI emojis 🤖🧠💭. Use professional icons from 'lucide-react' or 'phosphor-react'.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Create depth through layered design elements with z-index hierarchy and glassmorphism (12-24px blur).",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "All interactive elements and inputs MUST include a 'data-testid' attribute (e.g. data-testid='submit-form-button').",
+    "Use 'sonner' for toast notifications when the form is submitted.",
+    "NEVER use placeholder text/URLs for images. ONLY use the provided image URLs in this JSON.",
+    "Never use a completely transparent header over scrolling content. Always use backdrop-blur + semi-transparent dark background.",
+    "Implement Shadcn UI components for logic but override styles entirely to match the aggressive, bold, dark mode aesthetic."
+  ]
+}
