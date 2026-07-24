@@ -1,54 +1,64 @@
 import { useEffect } from "react";
-import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import "./App.css";
+import Lenis from "lenis";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
+import Header from "./components/site/Header";
+import Hero from "./components/site/Hero";
+import TrustBar from "./components/site/TrustBar";
+import WhyDifferent from "./components/site/WhyDifferent";
+import ProcessTimeline from "./components/site/ProcessTimeline";
+import VideoTestimonials from "./components/site/VideoTestimonials";
+import FeatureGrid from "./components/site/FeatureGrid";
+import WhoThisIsFor from "./components/site/WhoThisIsFor";
+import FAQ from "./components/site/FAQ";
+import AppointmentForm from "./components/site/AppointmentForm";
+import Footer from "./components/site/Footer";
+import StickyCTA from "./components/site/StickyCTA";
+import { Toaster } from "./components/ui/sonner";
 
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
+function App() {
   useEffect(() => {
-    helloWorldApi();
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    window.__lenis = lenis;
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      window.__lenis = null;
+    };
   }, []);
 
   return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div className="App grain relative bg-ink-950 text-white overflow-x-hidden" data-testid="landing-page">
+      <Header />
+      <main>
+        <Hero />
+        <TrustBar />
+        <WhyDifferent />
+        <ProcessTimeline />
+        <VideoTestimonials />
+        <FeatureGrid />
+        <WhoThisIsFor />
+        <FAQ />
+        <AppointmentForm />
+      </main>
+      <Footer />
+      <StickyCTA />
+      <Toaster position="top-center" theme="dark" richColors />
     </div>
   );
 }
