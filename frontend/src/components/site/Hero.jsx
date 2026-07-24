@@ -37,102 +37,106 @@ export const Hero = () => {
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-[720px]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-brand/20 blur-[160px]" />
 
-      <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mx-auto mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
-        >
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
-          <span className="text-[11px] uppercase tracking-[0.24em] text-white/70">
-            Done-for-you growth for established contractors
-          </span>
-        </motion.div>
-
-        <h1 className="font-display uppercase leading-[0.9] tracking-tight text-5xl sm:text-7xl lg:text-[5.5rem]">
-          {HEADLINE.map((line, i) => (
-            <span key={i} className="block overflow-hidden py-0.5">
-              <motion.span
-                className={`block ${line.accent ? "text-gradient" : "text-white"}`}
-                custom={i}
-                variants={lineVariants}
-                initial="hidden"
-                animate="visible"
-              >
-                {line.text}
-              </motion.span>
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-20 text-center sm:px-8 sm:pb-28 lg:grid-cols-2 lg:gap-12 lg:text-left">
+        {/* Left: copy */}
+        <div className="flex flex-col items-center lg:items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
+            <span className="text-[11px] uppercase tracking-[0.24em] text-white/70">
+              Done-for-you growth for established contractors
             </span>
-          ))}
-        </h1>
+          </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-          className="mx-auto mt-8 max-w-2xl text-base leading-relaxed text-white/60 sm:text-lg"
-        >
-          We help established contractors generate more profitable jobs with professionally filmed ads,
-          paid advertising, CRM automation and sales systems. We fly to you. We build it all. We run it.
-        </motion.p>
+          <h1 className="font-display uppercase leading-[0.9] tracking-tight text-5xl sm:text-6xl lg:text-7xl">
+            {HEADLINE.map((line, i) => (
+              <span key={i} className="block overflow-hidden py-0.5">
+                <motion.span
+                  className={`block ${line.accent ? "text-gradient" : "text-white"}`}
+                  custom={i}
+                  variants={lineVariants}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {line.text}
+                </motion.span>
+              </span>
+            ))}
+          </h1>
 
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
+            className="mt-8 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg"
+          >
+            We help established contractors generate more profitable jobs with professionally filmed ads,
+            paid advertising, CRM automation and sales systems. We fly to you. We build it all. We run it.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.7, ease: EASE }}
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+          >
+            <CTAButton to="apply" data-testid="hero-primary-cta">
+              Book Your Strategy Call <ArrowRight className="h-4 w-4" />
+            </CTAButton>
+            <CTAButton to="vsl" variant="glass" data-testid="hero-secondary-cta">
+              Watch The Video
+            </CTAButton>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+            className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:items-center"
+            data-testid="hero-social-proof"
+          >
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-2">
+                {["1607990281513-2c110a25bd8c", "1600486913747-55e5470d6f40", "1541888946425-d81bb19240f5"].map((id) => (
+                  <img
+                    key={id}
+                    src={`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=80&h=80&q=60`}
+                    alt=""
+                    className="h-9 w-9 rounded-full border-2 border-ink-950 object-cover"
+                  />
+                ))}
+              </div>
+              <div className="text-left">
+                <div className="flex items-center gap-0.5 text-brand-accent">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-3.5 w-3.5 fill-current" />
+                  ))}
+                </div>
+                <p className="text-xs text-white/55">Trusted by contractors doing $1M–$25M+</p>
+              </div>
+            </div>
+            <div className="hidden h-8 w-px bg-white/10 sm:block" />
+            <p className="max-w-xs text-xs uppercase tracking-[0.18em] text-white/40">
+              Roofing · Remodeling · HVAC · Concrete · Landscaping
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Right: VSL */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.7, ease: EASE }}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+          id="vsl"
+          style={{ y: videoY, scale: videoScale }}
+          className="relative w-full"
         >
-          <CTAButton to="apply" data-testid="hero-primary-cta">
-            Book Your Strategy Call <ArrowRight className="h-4 w-4" />
-          </CTAButton>
-          <CTAButton to="vsl" variant="glass" data-testid="hero-secondary-cta">
-            Watch The Video
-          </CTAButton>
+          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(44,92,229,0.55)] backdrop-blur-xl sm:p-3">
+            <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
+          </div>
         </motion.div>
       </div>
-
-      <motion.div
-        id="vsl"
-        style={{ y: videoY, scale: videoScale }}
-        className="relative mx-auto mt-16 max-w-5xl px-5 sm:mt-20 sm:px-8"
-      >
-        <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(44,92,229,0.55)] backdrop-blur-xl sm:p-3">
-          <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
-        </div>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.9 }}
-        className="relative mx-auto mt-12 flex max-w-4xl flex-col items-center gap-4 px-5 pb-20 text-center sm:flex-row sm:justify-center sm:gap-10 sm:pb-28"
-        data-testid="hero-social-proof"
-      >
-        <div className="flex items-center gap-2">
-          <div className="flex -space-x-2">
-            {["1607990281513-2c110a25bd8c", "1600486913747-55e5470d6f40", "1541888946425-d81bb19240f5"].map((id) => (
-              <img
-                key={id}
-                src={`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=80&h=80&q=60`}
-                alt=""
-                className="h-9 w-9 rounded-full border-2 border-ink-950 object-cover"
-              />
-            ))}
-          </div>
-          <div className="text-left">
-            <div className="flex items-center gap-0.5 text-brand-accent">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <Star key={i} className="h-3.5 w-3.5 fill-current" />
-              ))}
-            </div>
-            <p className="text-xs text-white/55">Trusted by contractors doing $1M–$25M+</p>
-          </div>
-        </div>
-        <div className="hidden h-8 w-px bg-white/10 sm:block" />
-        <p className="max-w-xs text-xs uppercase tracking-[0.18em] text-white/40">
-          Roofing · Remodeling · HVAC · Concrete · Landscaping
-        </p>
-      </motion.div>
     </section>
   );
 };
