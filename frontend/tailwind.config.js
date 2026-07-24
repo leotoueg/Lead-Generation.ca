@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Anton', 'Impact', 'sans-serif'],
-        sans: ['Manrope', 'system-ui', 'sans-serif'],
+        display: ['CocoGoose Pro', 'Anton', 'Impact', 'sans-serif'],
+        sans: ['Poppins', 'system-ui', 'sans-serif'],
       },
       colors: {
         brand: {

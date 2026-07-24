@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ClipboardList, PhoneCall, Plane, Clapperboard, Rocket, TrendingUp } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 
 const STEPS = [
   { icon: ClipboardList, title: "Apply", body: "Tell us about your business. We only take on contractors we know we can grow." },
@@ -69,6 +70,8 @@ export const ProcessTimeline = () => {
             ))}
           </div>
         </div>
+
+        <SectionCTA testid="process-cta" />
       </div>
     </section>
   );

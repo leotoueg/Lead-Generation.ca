@@ -99,7 +99,7 @@ export const Hero = () => {
             className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:items-center"
             data-testid="hero-social-proof"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <div className="flex -space-x-2">
                 {["1607990281513-2c110a25bd8c", "1600486913747-55e5470d6f40", "1541888946425-d81bb19240f5"].map((id) => (
                   <img

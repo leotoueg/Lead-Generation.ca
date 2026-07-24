@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { X, Plane, Video, Layers, TrendingUp } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 import Reveal from "./Reveal";
 
 const TRADITIONAL = [

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 import Reveal from "./Reveal";
 
 const IDEAL = [
@@ -78,6 +79,8 @@ export const WhoThisIsFor = () => {
             </div>
           </Reveal>
         </div>
+
+        <SectionCTA testid="who-cta" />
       </div>
     </section>
   );

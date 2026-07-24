@@ -15,7 +15,7 @@ export const Footer = () => {
           <button
             onClick={() => scrollToId("apply")}
             data-testid="footer-cta-button"
-            className="rounded-full border border-white/15 bg-white/[0.04] px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white backdrop-blur-xl transition-colors hover:bg-white/10"
+            className="rounded-full bg-[#285EE0] px-7 py-3.5 text-xs font-bold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_-12px_rgba(40,94,224,0.9)] transition-colors hover:bg-[#1f4fc4]"
           >
             Book Your Strategy Call
           </button>

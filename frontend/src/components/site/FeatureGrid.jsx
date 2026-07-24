@@ -4,6 +4,7 @@ import {
   MessageSquareText, Star, KanbanSquare, LineChart, FileBarChart, FlaskConical,
 } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 
 const FEATURES = [
   { icon: Clapperboard, title: "Professional Video Production", body: "Cinematic commercials and ad creative filmed on-site with your team.", span: true },
@@ -56,6 +57,8 @@ export const FeatureGrid = () => {
             </motion.div>
           ))}
         </div>
+
+        <SectionCTA testid="features-cta" />
       </div>
     </section>
   );

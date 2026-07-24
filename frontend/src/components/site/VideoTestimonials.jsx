@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Play, Quote } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 import Reveal from "./Reveal";
 import VideoPlayer from "./VideoPlayer";
 
@@ -98,6 +99,8 @@ export const VideoTestimonials = () => {
             </Reveal>
           ))}
         </div>
+
+        <SectionCTA testid="results-cta" />
       </div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>

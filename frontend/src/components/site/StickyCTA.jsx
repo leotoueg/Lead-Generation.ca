@@ -32,7 +32,7 @@ export const StickyCTA = () => {
           <button
             onClick={() => scrollToId("apply")}
             data-testid="sticky-cta-button"
-            className="flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand to-brand-accent px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_-12px_rgba(44,92,229,0.9)]"
+            className="flex w-full items-center justify-center gap-2 rounded-full bg-[#285EE0] px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white shadow-[0_0_40px_-12px_rgba(40,94,224,0.9)]"
           >
             Book Your Strategy Call <ArrowRight className="h-4 w-4" />
           </button>
