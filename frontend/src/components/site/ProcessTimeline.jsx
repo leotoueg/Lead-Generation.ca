@@ -50,15 +50,15 @@ export const ProcessTimeline = () => {
                 className="relative flex items-start gap-6 sm:gap-8"
                 data-testid={`process-step-${i + 1}`}
               >
-                <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-ink-900 shadow-[0_0_30px_-10px_rgba(44,92,229,0.8)]">
-                  <step.icon className="h-6 w-6 text-brand-accent" />
+                <div className="relative z-10 flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-ink-900 shadow-[0_0_30px_-10px_rgba(40,94,224,0.8)]">
+                  <step.icon className="h-6 w-6 text-[#285EE0]" />
                 </div>
                 <div className="pt-1">
                   <div className="flex items-baseline gap-3">
                     <span className="font-display text-sm text-white/30">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="font-display text-2xl uppercase tracking-tight text-white sm:text-3xl">
+                    <h3 className="font-display text-2xl uppercase tracking-tight text-[#285EE0] sm:text-3xl">
                       {step.title}
                     </h3>
                   </div>

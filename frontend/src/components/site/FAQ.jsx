@@ -1,5 +1,6 @@
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import SectionHeading from "./SectionHeading";
+import SectionCTA from "./SectionCTA";
 import Reveal from "./Reveal";
 
 const FAQS = [

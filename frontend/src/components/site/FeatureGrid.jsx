@@ -47,10 +47,10 @@ export const FeatureGrid = () => {
               data-testid={`feature-${i + 1}`}
             >
               <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-brand/20 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-ink-900 text-brand-accent">
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#285EE0]/30 bg-[#285EE0]/10 text-[#285EE0]">
                 <f.icon className="h-6 w-6" />
               </span>
-              <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-white">
+              <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-[#285EE0]">
                 {f.title}
               </h3>
               <p className="relative mt-2 max-w-md text-sm leading-relaxed text-white/55">{f.body}</p>
