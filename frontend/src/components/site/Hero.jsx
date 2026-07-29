@@ -33,22 +33,26 @@ export const Hero = () => {
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   return (
-    <section id="top" ref={ref} className="relative overflow-hidden pt-32 sm:pt-40" data-testid="hero-section">
+    <section id="top" ref={ref} className="relative overflow-hidden pt-24 sm:pt-28" data-testid="hero-section">
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-[720px]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-brand/20 blur-[160px]" />
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-20 text-center sm:px-8 sm:pb-28 lg:grid-cols-2 lg:gap-12 lg:text-left">
+      {/* Centered qualifier badge */}
+      <div className="relative mx-auto flex max-w-7xl justify-center px-5 sm:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="rounded-xl bg-yellow-400 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_30px_-8px_rgba(250,204,21,0.7)] sm:text-sm"
+          data-testid="hero-qualifier-badge"
+        >
+          ⚠️ For Contractors doing over 1M+ Per Year ⚠️
+        </motion.div>
+      </div>
+
+      <div className="relative mx-auto mt-8 grid max-w-7xl grid-cols-1 items-start gap-12 px-5 pb-16 text-center sm:px-8 sm:pb-20 lg:grid-cols-2 lg:gap-12 lg:text-left">
         {/* Left: copy */}
         <div className="flex flex-col items-center lg:items-start">
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mb-4 rounded-xl bg-yellow-400 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_30px_-8px_rgba(250,204,21,0.7)] sm:text-sm"
-            data-testid="hero-qualifier-badge"
-          >
-            ⚠️ For Contractors doing over 1M+ Per Year ⚠️
-          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -139,7 +143,7 @@ export const Hero = () => {
         <motion.div
           id="vsl"
           style={{ y: videoY, scale: videoScale }}
-          className="relative w-full"
+          className="relative w-full lg:mt-16"
         >
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(255,255,255,0.25)] backdrop-blur-xl sm:p-3">
             <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
