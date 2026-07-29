@@ -50,8 +50,8 @@ export const VideoPlayer = ({
             )}
             <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
             <span className="absolute inset-0 flex items-center justify-center">
-              <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-brand to-brand-accent shadow-[0_0_50px_-6px_rgba(44,92,229,0.9)] transition-transform duration-300 group-hover:scale-110">
-                <Play className="ml-1 h-8 w-8 fill-white text-white" />
+              <span className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-r from-white to-[#c2c6cd] shadow-[0_0_50px_-6px_rgba(255,255,255,0.6)] transition-transform duration-300 group-hover:scale-110">
+                <Play className="ml-1 h-8 w-8 fill-black text-black" />
               </span>
             </span>
             <span className="absolute bottom-5 left-6 text-left">

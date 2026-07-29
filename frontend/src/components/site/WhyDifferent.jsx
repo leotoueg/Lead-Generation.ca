@@ -50,7 +50,7 @@ export const WhyDifferent = () => {
             </div>
           </Reveal>
 
-          {/* Cherry Tree */}
+          {/* Lead-Generation.ca */}
           <div className="grid gap-6 sm:grid-cols-2 lg:col-span-8">
             {CHERRY.map((item, i) => (
               <Reveal key={item.title} delay={i * 0.08}>
@@ -59,11 +59,11 @@ export const WhyDifferent = () => {
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] p-8"
                 >
-                  <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-brand/25 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#285EE0]/30 bg-[#285EE0]/10 shadow-[0_0_30px_-10px_rgba(40,94,224,0.8)]">
-                    <item.icon className="h-6 w-6 text-[#285EE0]" />
+                  <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/15 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                  <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] shadow-[0_0_30px_-10px_rgba(255,255,255,0.4)]">
+                    <item.icon className="h-6 w-6 text-white" />
                   </span>
-                  <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-[#285EE0]">
+                  <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-white">
                     {item.title}
                   </h3>
                   <p className="relative mt-3 text-sm leading-relaxed text-white/55">{item.body}</p>

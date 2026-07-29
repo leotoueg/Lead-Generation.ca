@@ -28,9 +28,9 @@ export const Header = () => {
           onClick={() => scrollToId("top")}
           className="flex items-center"
           data-testid="header-logo"
-          aria-label="Cherry Tree Agency home"
+          aria-label="Lead-Generation.ca home"
         >
-          <img src="/cherrytree-logo.png" alt="Cherry Tree Agency" className="h-8 w-auto sm:h-9" />
+          <img src="/logo-white.png" alt="Lead-Generation.ca" className="h-6 w-auto sm:h-7" />
         </button>
         <CTAButton to="apply" size="md" data-testid="header-cta-button">
           Book Your Strategy Call

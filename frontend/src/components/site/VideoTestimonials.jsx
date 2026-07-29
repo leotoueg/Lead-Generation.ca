@@ -78,7 +78,7 @@ export const VideoTestimonials = () => {
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-105"
                   />
                   <span className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
-                  <span className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md transition-colors group-hover:bg-brand">
+                  <span className="absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-md transition-colors group-hover:bg-white/25">
                     <Play className="ml-0.5 h-5 w-5 fill-white text-white" />
                   </span>
                   <span className="absolute bottom-0 left-0 right-0 p-5">

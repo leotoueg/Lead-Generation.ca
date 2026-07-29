@@ -19,8 +19,8 @@ body {
 }
 
 ::selection {
-  background: #2C5CE5;
-  color: #ffffff;
+  background: #ffffff;
+  color: #050505;
 }
 
 /* Lenis smooth scroll */
@@ -47,7 +47,7 @@ html.lenis body {
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2C5CE5;
+  background: #c9cdd4;
 }
 
 @layer base {
@@ -58,19 +58,19 @@ html.lenis body {
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 4%;
     --popover-foreground: 0 0% 100%;
-    --primary: 226 78% 54%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 4%;
     --secondary: 0 0% 10%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 10%;
     --muted-foreground: 240 5% 65%;
-    --accent: 226 78% 54%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 85%;
+    --accent-foreground: 0 0% 4%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 100% / 0.1;
     --input: 0 0% 14%;
-    --ring: 226 78% 54%;
+    --ring: 0 0% 80%;
     --radius: 0.9rem;
   }
 }
@@ -119,7 +119,7 @@ html.lenis body {
 
 /* Gradient text */
 .text-gradient {
-  background: linear-gradient(120deg, #2C5CE5 0%, #00E5FF 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #9aa0aa 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -128,7 +128,7 @@ html.lenis body {
 
 /* Radial glow utility */
 .glow-radial {
-  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(44, 92, 229, 0.28), transparent 70%);
+  background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(255, 255, 255, 0.12), transparent 70%);
 }
 
 @media (prefers-reduced-motion: reduce) {

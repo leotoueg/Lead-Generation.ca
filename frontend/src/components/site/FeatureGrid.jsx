@@ -41,16 +41,16 @@ export const FeatureGrid = () => {
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.55, delay: (i % 3) * 0.06, ease: [0.22, 1, 0.36, 1] }}
               whileHover={{ y: -5 }}
-              className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition-colors hover:border-brand/40 ${
+              className={`group relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 transition-colors hover:border-white/25 ${
                 f.span ? "lg:col-span-2" : ""
               }`}
               data-testid={`feature-${i + 1}`}
             >
-              <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-brand/20 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#285EE0]/30 bg-[#285EE0]/10 text-[#285EE0]">
+              <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-white/10 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] text-white">
                 <f.icon className="h-6 w-6" />
               </span>
-              <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-[#285EE0]">
+              <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-white">
                 {f.title}
               </h3>
               <p className="relative mt-2 max-w-md text-sm leading-relaxed text-white/55">{f.body}</p>

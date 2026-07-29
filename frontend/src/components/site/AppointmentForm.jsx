@@ -141,7 +141,7 @@ export const AppointmentForm = () => {
                 type="submit"
                 disabled={loading}
                 data-testid="submit-lead-button"
-                className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-[#285EE0] hover:bg-[#1f4fc4] px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-white shadow-[0_0_50px_-10px_rgba(40,94,224,0.9)] transition-transform duration-300 hover:scale-[1.02] disabled:opacity-60"
+                className="mt-8 flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-b from-white to-[#c2c6cd] hover:to-[#dfe3e9] px-8 py-4 text-sm font-bold uppercase tracking-[0.14em] text-black shadow-[0_0_50px_-10px_rgba(255,255,255,0.6)] transition-transform duration-300 hover:scale-[1.02] disabled:opacity-60"
               >
                 {loading ? <Loader2 className="h-5 w-5 animate-spin" /> : <>Request Strategy Call <ArrowRight className="h-4 w-4" /></>}
               </button>

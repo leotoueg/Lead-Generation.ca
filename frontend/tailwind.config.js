@@ -13,9 +13,9 @@ module.exports = {
       },
       colors: {
         brand: {
-          DEFAULT: '#2C5CE5',
-          light: '#2E5BFF',
-          accent: '#00E5FF',
+          DEFAULT: '#E5E7EB',
+          light: '#FFFFFF',
+          accent: '#C9CDD4',
         },
         ink: {
           950: '#050505',
@@ -84,8 +84,8 @@ module.exports = {
           to: { transform: 'translateX(-50%)' }
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(44,92,229,0.45)' },
-          '50%': { boxShadow: '0 0 34px 6px rgba(44,92,229,0.55)' }
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(255,255,255,0.35)' },
+          '50%': { boxShadow: '0 0 34px 6px rgba(255,255,255,0.45)' }
         }
       },
       animation: {

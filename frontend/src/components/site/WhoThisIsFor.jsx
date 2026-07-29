@@ -43,8 +43,8 @@ export const WhoThisIsFor = () => {
                     transition={{ duration: 0.5, delay: i * 0.06 }}
                     className="flex items-start gap-4"
                   >
-                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand to-brand-accent">
-                      <Check className="h-4 w-4 text-white" />
+                    <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-white to-[#c2c6cd]">
+                      <Check className="h-4 w-4 text-black" />
                     </span>
                     <span className="text-base text-white/85 sm:text-lg">{item}</span>
                   </motion.li>

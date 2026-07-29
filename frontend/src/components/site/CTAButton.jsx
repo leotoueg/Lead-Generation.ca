@@ -10,7 +10,7 @@ const sizes = {
 
 const variants = {
   primary:
-    "text-white bg-[#285EE0] shadow-[0_0_44px_-10px_rgba(40,94,224,0.85)] hover:scale-[1.03] hover:bg-[#1f4fc4] hover:shadow-[0_0_60px_-8px_rgba(40,94,224,1)]",
+    "text-black bg-gradient-to-b from-white to-[#c2c6cd] shadow-[0_0_44px_-12px_rgba(255,255,255,0.55)] hover:scale-[1.03] hover:to-[#dfe3e9] hover:shadow-[0_0_60px_-10px_rgba(255,255,255,0.75)]",
   glass:
     "text-white border border-white/15 bg-white/[0.04] backdrop-blur-xl hover:bg-white/[0.09] hover:scale-[1.02]",
 };
