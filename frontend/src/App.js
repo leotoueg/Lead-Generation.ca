@@ -12,7 +12,7 @@ import VideoTestimonials from "./components/site/VideoTestimonials";
 import FeatureGrid from "./components/site/FeatureGrid";
 import WhoThisIsFor from "./components/site/WhoThisIsFor";
 import FAQ from "./components/site/FAQ";
-import AppointmentForm from "./components/site/AppointmentForm";
+import AppointmentForm from "./components/site/BookingCalendar";
 import Footer from "./components/site/Footer";
 import StickyCTA from "./components/site/StickyCTA";
 import { Toaster } from "./components/ui/sonner";

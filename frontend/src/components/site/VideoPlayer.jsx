@@ -4,14 +4,62 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const DEFAULT_VIDEO = "aqz-KE-bpKQ";
 
+// type: "youtube" | "loom" | "mp4"
 export const VideoPlayer = ({
+  type = "youtube",
   videoId = DEFAULT_VIDEO,
+  loomId,
+  src,
   poster,
   label = "Watch the video",
   autoPlay = false,
   testid = "video-player",
 }) => {
   const [playing, setPlaying] = useState(autoPlay);
+
+  const renderMedia = () => {
+    if (type === "loom") {
+      return (
+        <motion.iframe
+          key="frame"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute inset-0 h-full w-full"
+          src={`https://www.loom.com/embed/${loomId}?autoplay=1&hideEmbedTopBar=true`}
+          title={label}
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+    if (type === "mp4") {
+      return (
+        <motion.video
+          key="frame"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute inset-0 h-full w-full bg-black object-contain"
+          src={src}
+          poster={poster}
+          controls
+          autoPlay
+          playsInline
+        />
+      );
+    }
+    return (
+      <motion.iframe
+        key="frame"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="absolute inset-0 h-full w-full"
+        src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
+        title={label}
+        allow="accelerated-media; autoplay; encrypted-media; picture-in-picture"
+        allowFullScreen
+      />
+    );
+  };
 
   return (
     <div
@@ -20,16 +68,7 @@ export const VideoPlayer = ({
     >
       <AnimatePresence mode="wait">
         {playing ? (
-          <motion.iframe
-            key="frame"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 h-full w-full"
-            src={`https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`}
-            title={label}
-            allow="accelerated-media; autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-          />
+          renderMedia()
         ) : (
           <motion.button
             key="poster"

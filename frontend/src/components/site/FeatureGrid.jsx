@@ -9,7 +9,7 @@ import SectionCTA from "./SectionCTA";
 const FEATURES = [
   { icon: Clapperboard, title: "Professional Video Production", body: "Cinematic commercials and ad creative filmed on-site with your team.", span: true },
   { icon: Search, title: "Google Ads", body: "High-intent search campaigns built to capture buyers ready now." },
-  { icon: Facebook, title: "Facebook & Instagram Ads", body: "Scroll-stopping paid social that fills the top of your funnel." },
+  { icon: Facebook, title: "Meta Ads", body: "Scroll-stopping paid social that fills the top of your funnel." },
   { icon: LayoutTemplate, title: "Landing Pages", body: "Conversion-engineered pages that turn clicks into booked calls." },
   { icon: Database, title: "CRM Setup", body: "A single source of truth for every lead, job and conversation." },
   { icon: Workflow, title: "Lead Nurture Automation", body: "Automated follow-up that works your pipeline around the clock.", span: true },
