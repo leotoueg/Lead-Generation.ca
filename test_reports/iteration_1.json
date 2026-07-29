@@ -29,6 +29,6 @@
   "retest_needed": false,
   "should_main_agent_self_test": false,
   "main_agent_can_self_test": true,
-  "context_for_next_testing_agent": "Backend URL: https://growth-system-setup.preview.emergentagent.com (from frontend/.env). Feature cards use data-testid=\"feature-{1..12}\" (not feature-card-*). Testimonial modal is a Radix Dialog with data-testid=\"testimonial-modal\" — it's always in the DOM once opened; use isVisible() rather than count() to detect close. Sonner toasts appear in a portal — query with [data-sonner-toaster] * or text-based lookups. Lenis smooth scrolling works fine with data-testid clicks; sticky header offsets scroll target to ~24px, treat that as 'at top'.",
+  "context_for_next_testing_agent": "Backend URL: https://cherry-tree-agency.preview.emergentagent.com (from frontend/.env). Feature cards use data-testid=\"feature-{1..12}\" (not feature-card-*). Testimonial modal is a Radix Dialog with data-testid=\"testimonial-modal\" — it's always in the DOM once opened; use isVisible() rather than count() to detect close. Sonner toasts appear in a portal — query with [data-sonner-toaster] * or text-based lookups. Lenis smooth scrolling works fine with data-testid clicks; sticky header offsets scroll target to ~24px, treat that as 'at top'.",
   "rca of the issue": "No issues found."
 }
