@@ -14,7 +14,7 @@ const FAQS = [
   },
   {
     q: "What industries do you work with?",
-    a: "Established home-service and construction contractors: roofing, bathroom and kitchen remodeling, painting, concrete, landscaping, HVAC, windows and doors, flooring, pools and related trades.",
+    a: "Established home-service and construction contractors — primarily roofing, bathroom remodeling, kitchen remodeling and general contracting.",
   },
   {
     q: "How quickly can campaigns launch?",

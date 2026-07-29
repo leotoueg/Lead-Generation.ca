@@ -11,7 +11,7 @@ import Reveal from "./Reveal";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-const SERVICES = ["Roofing", "Bathroom Remodeling", "Kitchen Remodeling", "Painting", "Concrete", "Landscaping", "HVAC", "Windows & Doors", "Flooring", "Pools", "Home Services", "Other"];
+const SERVICES = ["Roofing", "Bathroom Remodeling", "Kitchen Remodeling", "General Contractor", "Other"];
 const REVENUE = ["$1M – $2M", "$2M – $5M", "$5M – $10M", "$10M – $25M", "$25M+", "Under $1M"];
 
 const EMPTY = {

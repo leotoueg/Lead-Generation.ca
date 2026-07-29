@@ -2,6 +2,7 @@ const ITEMS = [
   "Professionally Filmed Ads",
   "Google Ads",
   "Facebook Ads",
+  "YouTube Ads",
   "CRM Automation",
   "Landing Pages",
   "Appointment Booking",

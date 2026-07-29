@@ -134,7 +134,7 @@ export const Hero = () => {
             </div>
             <div className="hidden h-8 w-px bg-white/10 sm:block" />
             <p className="max-w-xs text-xs uppercase tracking-[0.18em] text-white/40">
-              Roofing · Remodeling · HVAC · Concrete · Landscaping
+              Roofing · Bathroom Remodeling · Kitchen Remodeling · General Contractors
             </p>
           </motion.div>
         </div>
