@@ -44,6 +44,15 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="mb-4 rounded-xl bg-yellow-400 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_30px_-8px_rgba(250,204,21,0.7)] sm:text-sm"
+            data-testid="hero-qualifier-badge"
+          >
+            ⚠️ For Contractors doing over 1M+ Per Year ⚠️
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
