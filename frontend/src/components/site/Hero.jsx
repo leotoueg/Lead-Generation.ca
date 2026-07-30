@@ -70,7 +70,7 @@ export const Hero = () => {
             {HEADLINE.map((line, i) => (
               <span key={i} className="block overflow-hidden py-0.5">
                 <motion.span
-                  className={`block ${line.accent ? "text-gradient" : "text-white"}`}
+                  className={`block ${line.accent ? "text-gold" : "text-white"}`}
                   custom={i}
                   variants={lineVariants}
                   initial="hidden"

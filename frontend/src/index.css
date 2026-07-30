@@ -131,6 +131,15 @@ html.lenis body {
   mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 
+/* Gold gradient (headline accent) */
+.text-gold {
+  background: linear-gradient(120deg, #F5C542 0%, #C8971B 55%, #9A7112 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* Gradient text */
 .text-gradient {
   background: linear-gradient(120deg, #ffffff 0%, #9aa0aa 100%);
