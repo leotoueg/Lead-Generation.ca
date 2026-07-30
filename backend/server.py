@@ -270,6 +270,17 @@ async def root():
     return {"message": "Lead-Generation.ca API"}
 
 
+@app.get("/health")
+async def health():
+    # Lightweight liveness probe: no DB, no Google, no OAuth, no third-party calls.
+    return {"status": "ok"}
+
+
+@api_router.get("/health")
+async def api_health():
+    return {"status": "ok"}
+
+
 @api_router.get("/booking/availability")
 async def booking_availability():
     tz = _tz()
