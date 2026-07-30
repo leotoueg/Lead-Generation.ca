@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { Star, ArrowRight } from "lucide-react";
 import CTAButton from "./CTAButton";
 import VideoPlayer from "./VideoPlayer";
+import TrustedBy from "./TrustedBy";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -113,16 +114,6 @@ export const Hero = () => {
             data-testid="hero-social-proof"
           >
             <div className="flex items-center gap-3">
-              <div className="flex -space-x-2">
-                {["1607990281513-2c110a25bd8c", "1600486913747-55e5470d6f40", "1541888946425-d81bb19240f5"].map((id) => (
-                  <img
-                    key={id}
-                    src={`https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=80&h=80&q=60`}
-                    alt=""
-                    className="h-9 w-9 rounded-full border-2 border-ink-950 object-cover"
-                  />
-                ))}
-              </div>
               <div className="text-left">
                 <div className="flex items-center gap-0.5 text-brand-accent">
                   {Array.from({ length: 5 }).map((_, i) => (
@@ -139,16 +130,19 @@ export const Hero = () => {
           </motion.div>
         </div>
 
-        {/* Right: VSL */}
-        <motion.div
-          id="vsl"
-          style={{ y: videoY, scale: videoScale }}
-          className="relative w-full lg:mt-10"
-        >
-          <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(255,255,255,0.25)] backdrop-blur-xl sm:p-3">
-            <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
-          </div>
-        </motion.div>
+        {/* Right: VSL + Trusted By */}
+        <div className="w-full lg:mt-10">
+          <motion.div
+            id="vsl"
+            style={{ y: videoY, scale: videoScale }}
+            className="relative w-full"
+          >
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(255,255,255,0.25)] backdrop-blur-xl sm:p-3">
+              <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
+            </div>
+          </motion.div>
+          <TrustedBy />
+        </div>
       </div>
     </section>
   );

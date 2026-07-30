@@ -117,6 +117,12 @@ html.lenis body {
   to { transform: translateX(-50%); }
 }
 
+/* Edge fade (fizzle in/out) for horizontal marquees */
+.edge-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+
 /* Gradient text */
 .text-gradient {
   background: linear-gradient(120deg, #ffffff 0%, #9aa0aa 100%);
