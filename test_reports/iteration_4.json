@@ -1,0 +1,22 @@
+{
+  "summary": "Backend testing for webhook-first booking flow. All 7 pytest cases passed. Verified: (1) POST /api/booking returns 503 on preview (calendar not connected) while the CRM webhook has already fired to LEAD_WEBHOOK_URL (httpbin) with status 200/ok=true; (2) payload field formatting is exact — first_name='Marcus', last_name='Bennett', full_name, email, phone, company, industry='Roofing', notes, appointment_date human-readable (weekday, month day, year), appointment_time='2:00 PM', appointment_timezone='America/Toronto', appointment_start_iso with -04:00/-05:00 offset, appointment_when combined, source='Lead-Generation.ca', submitted_at present; (3) Validation runs BEFORE webhook: invalid time '11:30' returns 400 and does NOT update _last_webhook (confirmed by sentinel marker); past date returns 400; (4) GET /api/booking/last-webhook returns 200 with WEBHOOK_DEBUG=true; (5) Sanity: root, availability (4 days x 3 slots at 10:00/14:00/16:00), oauth status configured=true.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_webhook_first.py",
+    "/app/test_reports/pytest/webhook_first.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "server.py: _last_webhook is a module-level dict, not thread-safe under concurrent bookings — acceptable for a debug/observability aid but note for production.",
+    "_fire_webhook uses synchronous requests wrapped in asyncio.to_thread — fine, but a 10s timeout still blocks the booking response by up to 10s per request. Consider fire-and-forget task if latency matters.",
+    "create_booking builds the Booking and fires the webhook BEFORE checking _calendar_ready(), which correctly satisfies the requirement, but this means webhooks will fire for every valid-slot POST even when calendar is permanently offline — expected behavior per spec.",
+    "GET /api/booking/last-webhook exposes raw lead PII (name/email/phone) when WEBHOOK_DEBUG=true. Ensure WEBHOOK_DEBUG stays false in production."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "100%", "frontend": "not tested (skipped per request)"},
+  "seed_data_creation": "None — bookings are in-memory and calendar creation intentionally 503s on preview.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Preview env has LEAD_WEBHOOK_URL=https://httpbin.org/post, WEBHOOK_DEBUG=true, and Google Calendar intentionally disconnected (bookings return 503 by design after webhook fires). Do not attempt Google OAuth. Test file: /app/backend/tests/test_webhook_first.py."
+}

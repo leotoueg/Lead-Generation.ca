@@ -28,6 +28,8 @@ GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '').strip()
 GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '').strip()
 GOOGLE_REFRESH_TOKEN = os.environ.get('GOOGLE_REFRESH_TOKEN', '').strip()
 PUBLIC_BASE_URL = os.environ.get('PUBLIC_BASE_URL', '').strip().rstrip('/')
+LEAD_WEBHOOK_URL = os.environ.get('LEAD_WEBHOOK_URL', '').strip()
+WEBHOOK_DEBUG = os.environ.get('WEBHOOK_DEBUG', '').lower() in ('1', 'true', 'yes')
 
 GOOGLE_OAUTH_SCOPES = "https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/userinfo.email"
 GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth"
@@ -41,6 +43,8 @@ logger = logging.getLogger(__name__)
 
 # In-memory access-token cache (avoids refreshing on every request)
 _token_cache = {"access_token": None, "expiry": 0.0}
+# Last webhook attempt (for debugging/verification when WEBHOOK_DEBUG is on)
+_last_webhook = {}
 
 
 # ---------- Models ----------
@@ -96,6 +100,65 @@ def _upcoming_business_days() -> List[date]:
             days.append(d)
         d += timedelta(days=1)
     return days
+
+
+def _appt_strings(date_str: str, time_str: str):
+    """Return (start_datetime, 'Friday, July 31, 2026', '4:00 PM')."""
+    tz = _tz()
+    y, mo, d = map(int, date_str.split("-"))
+    hh, mm = map(int, time_str.split(":"))
+    start = datetime(y, mo, d, hh, mm, tzinfo=tz)
+    nice_date = start.strftime("%A, %B %-d, %Y")
+    suffix = "AM" if hh < 12 else "PM"
+    nice_time = f"{hh % 12 or 12}:{mm:02d} {suffix}"
+    return start, nice_date, nice_time
+
+
+# ---------- CRM webhook (fires first, before the calendar step) ----------
+def _webhook_payload(b: "Booking") -> dict:
+    start, nice_date, nice_time = _appt_strings(b.date, b.time)
+    parts = b.name.strip().split()
+    first = parts[0] if parts else b.name
+    last = " ".join(parts[1:]) if len(parts) > 1 else ""
+    return {
+        "first_name": first,
+        "last_name": last,
+        "full_name": b.name,
+        "email": b.email,
+        "phone": b.phone,
+        "company": b.company,
+        "industry": b.service,
+        "notes": b.notes or "",
+        "appointment_date": nice_date,
+        "appointment_time": nice_time,
+        "appointment_timezone": BOOKING_TZ,
+        "appointment_start_iso": start.isoformat(),
+        "appointment_when": f"{nice_date} at {nice_time} ({BOOKING_TZ})",
+        "source": "Lead-Generation.ca",
+        "submitted_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+def _fire_webhook(payload: dict):
+    """Best-effort POST to the CRM webhook. Never blocks the booking on failure."""
+    if not LEAD_WEBHOOK_URL:
+        _last_webhook.clear()
+        _last_webhook.update({"configured": False, "payload": payload})
+        return
+    try:
+        r = requests.post(LEAD_WEBHOOK_URL, json=payload, timeout=10)
+        _last_webhook.clear()
+        _last_webhook.update({
+            "configured": True,
+            "status": r.status_code,
+            "ok": r.ok,
+            "payload": payload,
+            "at": datetime.now(timezone.utc).isoformat(),
+        })
+    except Exception as exc:  # noqa: BLE001
+        logger.warning("CRM webhook post failed: %s", exc)
+        _last_webhook.clear()
+        _last_webhook.update({"configured": True, "status": None, "error": str(exc), "payload": payload})
 
 
 # ---------- Google Calendar (OAuth, refresh-token based, no DB) ----------
@@ -261,6 +324,12 @@ async def create_booking(input: BookingCreate):
     if datetime(y, mo, d, hh, 0, tzinfo=tz) <= datetime.now(tz):
         raise HTTPException(status_code=400, detail="That time slot has already passed.")
 
+    booking = Booking(**input.model_dump())
+
+    # Webhook-first: send the lead to the CRM before the calendar step, so the
+    # lead is captured even if the Google Calendar API is down or misconfigured.
+    await asyncio.to_thread(_fire_webhook, _webhook_payload(booking))
+
     if not _calendar_ready():
         raise HTTPException(status_code=503, detail="Booking is temporarily unavailable. Please try again shortly.")
 
@@ -278,7 +347,6 @@ async def create_booking(input: BookingCreate):
     if _overlaps(start_utc, end_utc, busy):
         raise HTTPException(status_code=409, detail="That time slot was just booked. Please choose another.")
 
-    booking = Booking(**input.model_dump())
     try:
         booking.google_event_id = await asyncio.to_thread(_insert_calendar_event, token, booking)
     except Exception as exc:  # noqa: BLE001
@@ -288,6 +356,13 @@ async def create_booking(input: BookingCreate):
     if not booking.google_event_id:
         raise HTTPException(status_code=502, detail="Couldn't create your booking. Please try again.")
     return booking
+
+
+@api_router.get("/booking/last-webhook")
+async def last_webhook():
+    if not WEBHOOK_DEBUG:
+        raise HTTPException(status_code=404, detail="Not found")
+    return _last_webhook or {"configured": bool(LEAD_WEBHOOK_URL), "note": "no webhook fired yet"}
 
 
 # ---------- Google Calendar OAuth (owner connects once) ----------

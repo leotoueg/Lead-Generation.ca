@@ -27,3 +27,5 @@ services:
         sync: false
       - key: GOOGLE_REFRESH_TOKEN
         sync: false
+      - key: LEAD_WEBHOOK_URL
+        sync: false
