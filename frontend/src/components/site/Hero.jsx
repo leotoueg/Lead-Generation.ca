@@ -1,9 +1,8 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Star, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import CTAButton from "./CTAButton";
 import VideoPlayer from "./VideoPlayer";
-import TrustedBy from "./TrustedBy";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -92,6 +91,18 @@ export const Hero = () => {
             paid advertising, CRM automation and sales systems. We fly to you. We build it all. We run it.
           </motion.p>
 
+          {/* Mobile VSL — sits between the paragraph and the primary CTA on small screens */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.6, ease: EASE }}
+            className="mt-6 w-full lg:hidden"
+          >
+            <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(255,255,255,0.25)] backdrop-blur-xl">
+              <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl-mobile" />
+            </div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -101,37 +112,19 @@ export const Hero = () => {
             <CTAButton to="apply" data-testid="hero-primary-cta">
               Book Your Strategy Call <ArrowRight className="h-4 w-4" />
             </CTAButton>
-            <CTAButton to="vsl" variant="glass" data-testid="hero-secondary-cta">
+            <CTAButton
+              to="vsl"
+              variant="glass"
+              className="hidden lg:inline-flex"
+              data-testid="hero-secondary-cta"
+            >
               Watch The Video
             </CTAButton>
           </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:items-center"
-            data-testid="hero-social-proof"
-          >
-            <div className="flex items-center gap-3">
-              <div className="text-left">
-                <div className="flex items-center gap-0.5 text-brand-accent">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} className="h-3.5 w-3.5 fill-current" />
-                  ))}
-                </div>
-                <p className="text-xs text-white/55">Trusted by contractors doing $1M–$25M+</p>
-              </div>
-            </div>
-            <div className="hidden h-8 w-px bg-white/10 sm:block" />
-            <p className="max-w-xs text-xs uppercase tracking-[0.18em] text-white/40">
-              Roofing · Bathroom Remodeling · Kitchen Remodeling · General Contractors
-            </p>
-          </motion.div>
         </div>
 
-        {/* Right: VSL + Trusted By */}
-        <div className="w-full lg:mt-10">
+        {/* Right: VSL (desktop only) */}
+        <div className="hidden w-full lg:mt-10 lg:block">
           <motion.div
             id="vsl"
             style={{ y: videoY, scale: videoScale }}
@@ -141,7 +134,6 @@ export const Hero = () => {
               <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
             </div>
           </motion.div>
-          <TrustedBy />
         </div>
       </div>
     </section>

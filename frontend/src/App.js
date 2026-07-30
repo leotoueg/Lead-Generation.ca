@@ -7,6 +7,7 @@ import Hero from "./components/site/Hero";
 import TrustBar from "./components/site/TrustBar";
 import CTABand from "./components/site/CTABand";
 import WhyDifferent from "./components/site/WhyDifferent";
+import IndustriesServed from "./components/site/IndustriesServed";
 import ProcessTimeline from "./components/site/ProcessTimeline";
 import VideoTestimonials from "./components/site/VideoTestimonials";
 import FeatureGrid from "./components/site/FeatureGrid";
@@ -51,6 +52,7 @@ function App() {
         <TrustBar />
         <CTABand text="We become your in-house growth team." testid="cta-band-top" />
         <WhyDifferent />
+        <IndustriesServed />
         <ProcessTimeline />
         <VideoTestimonials />
         <FeatureGrid />
