@@ -33,7 +33,7 @@ export const Hero = () => {
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   return (
-    <section id="top" ref={ref} className="relative overflow-hidden pt-16 sm:pt-20" data-testid="hero-section">
+    <section id="top" ref={ref} className="relative overflow-hidden pt-16 sm:pt-20 lg:flex lg:min-h-[90vh] lg:flex-col lg:justify-center lg:pt-24" data-testid="hero-section">
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-[720px]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-brand/20 blur-[160px]" />
 
@@ -50,7 +50,7 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      <div className="relative mx-auto mt-6 grid max-w-7xl grid-cols-1 items-start gap-8 px-5 pb-12 text-center sm:px-8 sm:pb-16 lg:grid-cols-2 lg:gap-12 lg:text-left">
+      <div className="relative mx-auto mt-6 grid max-w-7xl grid-cols-1 items-start gap-8 px-5 pb-12 text-center sm:px-8 sm:pb-16 lg:mt-8 lg:grid-cols-2 lg:items-center lg:gap-12 lg:pb-0 lg:text-left">
         {/* Left: copy */}
         <div className="flex flex-col items-center lg:items-start">
           <motion.div
