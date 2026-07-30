@@ -26,7 +26,7 @@ export const FeatureGrid = () => {
     <section className="relative py-24 sm:py-32" data-testid="features-section">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          chapter="04"
+          chapter="05"
           kicker="What you get"
           title="One team. The entire system."
           subtitle="Everything required to generate, nurture and close more profitable jobs — done for you."

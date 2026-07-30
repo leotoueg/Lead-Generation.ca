@@ -25,7 +25,7 @@ export const ProcessTimeline = () => {
     <section className="relative py-24 sm:py-32" data-testid="process-section">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          chapter="02"
+          chapter="03"
           kicker="The process"
           title="Six steps to a full pipeline"
           subtitle="A clear, proven path from application to a market-leading acquisition system."

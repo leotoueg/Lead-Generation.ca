@@ -18,7 +18,7 @@ export const IndustriesServed = () => {
         <Reveal>
           <div className="flex flex-col items-center text-center">
             <div className="mb-5 flex items-center gap-3">
-              <span className="font-display text-lg leading-none text-brand-accent">01.5</span>
+              <span className="font-display text-lg leading-none text-brand-accent">02</span>
               <span className="h-px w-10 bg-white/25" />
               <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/50">
                 Industries Served

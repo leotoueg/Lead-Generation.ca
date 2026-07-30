@@ -35,7 +35,7 @@ export const FAQ = () => {
     <section className="relative py-24 sm:py-32" data-testid="faq-section">
       <div className="mx-auto max-w-4xl px-5 sm:px-8">
         <SectionHeading
-          chapter="06"
+          chapter="07"
           kicker="Questions"
           title="Answers before you ask"
           align="center"

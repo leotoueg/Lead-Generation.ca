@@ -42,7 +42,7 @@ export const VideoTestimonials = () => {
     <section className="relative border-y border-white/10 bg-black/40 py-24 sm:py-32" data-testid="testimonials-section">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          chapter="03"
+          chapter="04"
           kicker="Results"
           title="Contractors in their own words"
           subtitle="Real owners. Real jobs. Real growth. Press play."

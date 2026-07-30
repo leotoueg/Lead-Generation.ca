@@ -23,7 +23,7 @@ export const WhoThisIsFor = () => {
     <section className="relative border-y border-white/10 bg-black/40 py-24 sm:py-32" data-testid="who-section">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <SectionHeading
-          chapter="05"
+          chapter="06"
           kicker="Who this is for"
           title="Built for established contractors"
           subtitle="We do our best work with owners ready to scale — not those looking for a quick fix."

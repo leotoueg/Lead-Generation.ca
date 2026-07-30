@@ -99,7 +99,7 @@ export const BookingCalendar = () => {
 
       <div className="relative mx-auto max-w-5xl px-5 sm:px-8">
         <SectionHeading
-          chapter="07"
+          chapter="08"
           kicker="Book a call"
           title={<>Ready to become the go-to<br />contractor in your market?</>}
           subtitle="Pick a time that works and lock in your strategy call. It's the fastest way to see if we're a fit."
