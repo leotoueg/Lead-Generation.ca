@@ -244,10 +244,16 @@ def _insert_calendar_event(access_token: str, booking: "Booking") -> Optional[st
         "end": {"dateTime": end_dt.isoformat(), "timeZone": BOOKING_TZ},
         "attendees": [{"email": booking.email, "displayName": booking.name}],
         "reminders": {"useDefault": True},
+        "conferenceData": {
+            "createRequest": {
+                "requestId": booking.id,
+                "conferenceSolutionKey": {"type": "hangoutsMeet"},
+            }
+        },
     }
     resp = requests.post(
         f"https://www.googleapis.com/calendar/v3/calendars/{GOOGLE_CALENDAR_ID}/events",
-        params={"sendUpdates": "all"},
+        params={"sendUpdates": "all", "conferenceDataVersion": 1},
         headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"},
         json=body,
         timeout=15,
