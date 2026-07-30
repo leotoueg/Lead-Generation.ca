@@ -7,6 +7,7 @@ const LOGOS = [
   { src: "/logos/roofing-monkeys.png", name: "Roofing Monkeys", h: "h-14" },
   { src: "/logos/apex.png", name: "Apex Bath & Remodeling", h: "h-14" },
   { src: "/logos/prime-baths.png", name: "Prime Baths of NM", h: "h-11" },
+  { src: "/logos/sage.png", name: "Sage Kitchen & Bath", h: "h-14" },
 ];
 
 export const TrustedBy = () => {
