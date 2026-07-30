@@ -23,7 +23,7 @@ export const Header = () => {
       }`}
       data-testid="site-header"
     >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+      <div className="relative mx-auto flex max-w-7xl items-center justify-center px-5 py-4 sm:justify-between sm:px-8">
         <button
           onClick={() => scrollToId("top")}
           className="flex items-center"
@@ -32,9 +32,11 @@ export const Header = () => {
         >
           <img src="/logo-white.png" alt="Lead-Generation.ca" className="h-6 w-auto sm:h-7" />
         </button>
-        <CTAButton to="apply" size="md" data-testid="header-cta-button">
-          Book Your Strategy Call
-        </CTAButton>
+        <span className="hidden sm:inline-flex">
+          <CTAButton to="apply" size="md" data-testid="header-cta-button">
+            Book Your Strategy Call
+          </CTAButton>
+        </span>
       </div>
     </motion.header>
   );

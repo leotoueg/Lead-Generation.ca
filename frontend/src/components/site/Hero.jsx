@@ -43,7 +43,7 @@ export const Hero = () => {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="rounded-xl bg-yellow-400 px-4 py-2 text-center text-xs font-bold uppercase tracking-[0.12em] text-white shadow-[0_0_30px_-8px_rgba(250,204,21,0.7)] sm:text-sm"
+          className="whitespace-nowrap rounded-full bg-yellow-400 px-4 py-1 text-center text-[10px] font-bold uppercase tracking-[0.06em] text-white shadow-[0_0_30px_-8px_rgba(250,204,21,0.7)] sm:rounded-xl sm:py-2 sm:text-sm sm:tracking-[0.12em]"
           data-testid="hero-qualifier-badge"
         >
           ⚠️ For Contractors doing over 1M+ Per Year ⚠️
