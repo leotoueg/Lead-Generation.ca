@@ -112,6 +112,14 @@ html.lenis body {
   animation-play-state: paused;
 }
 
+/* Direction / speed modifiers (must come after .marquee-track to override the shorthand) */
+.marquee-reverse {
+  animation-direction: reverse;
+}
+.marquee-slow {
+  animation-duration: 60s;
+}
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }

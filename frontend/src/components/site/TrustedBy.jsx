@@ -37,7 +37,7 @@ export const TrustedBy = () => {
         Trusted By
       </p>
       <div className="edge-fade-x relative mt-3 overflow-hidden">
-        <div className="marquee-track items-center gap-10">
+        <div className="marquee-track marquee-slow items-center gap-10">
           {items.map((l, i) => (
             <div
               key={i}
