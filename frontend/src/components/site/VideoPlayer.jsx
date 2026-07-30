@@ -9,6 +9,7 @@ export const VideoPlayer = ({
   type = "youtube",
   videoId = DEFAULT_VIDEO,
   loomId,
+  vimeoId,
   src,
   poster,
   label = "Watch the video",
@@ -26,6 +27,20 @@ export const VideoPlayer = ({
           animate={{ opacity: 1 }}
           className="absolute inset-0 h-full w-full"
           src={`https://www.loom.com/embed/${loomId}?autoplay=1&hideEmbedTopBar=true`}
+          title={label}
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+    if (type === "vimeo") {
+      return (
+        <motion.iframe
+          key="frame"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute inset-0 h-full w-full"
+          src={`https://player.vimeo.com/video/${vimeoId}?autoplay=1&title=0&byline=0&portrait=0`}
           title={label}
           allow="autoplay; fullscreen; picture-in-picture"
           allowFullScreen

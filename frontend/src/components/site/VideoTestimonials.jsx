@@ -17,6 +17,22 @@ const TESTIMONIALS = [
     loomId: "586c3a1df10c4ff1b2773b68ccd3c4e9",
     poster: "https://cdn.loom.com/sessions/thumbnails/586c3a1df10c4ff1b2773b68ccd3c4e9-4c44c1a400634fe1.gif",
   },
+  {
+    name: "Clint Roberts",
+    company: "Prime Baths of New Mexico",
+    location: "Albuquerque, NM",
+    type: "mp4",
+    src: "/testimonials/clint.mp4",
+    poster: "/testimonials/clint.jpg",
+  },
+  {
+    name: "Emilio Talavera",
+    company: "Roofing Monkeys",
+    location: "Toronto, ON",
+    type: "vimeo",
+    vimeoId: "1214123088",
+    poster: "https://i.vimeocdn.com/video/2184966481-191d31006fbfeecb0398819488f3080451587cd875ec02aaad63ee0f32b15878-d_640",
+  },
 ];
 
 export const VideoTestimonials = () => {
@@ -84,6 +100,7 @@ export const VideoTestimonials = () => {
             <VideoPlayer
               type={active.type}
               loomId={active.loomId}
+              vimeoId={active.vimeoId}
               src={active.src}
               poster={active.poster}
               label={active.name}

@@ -1,6 +1,7 @@
 from fastapi import FastAPI, APIRouter, HTTPException
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
+from starlette.responses import RedirectResponse, HTMLResponse
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import asyncio
@@ -30,8 +31,18 @@ LEAD_WEBHOOK_URL = os.environ.get('LEAD_WEBHOOK_URL', '').strip()
 BOOKING_TZ = os.environ.get('BOOKING_TIMEZONE', 'America/Toronto')
 SLOT_HOURS = [10, 14, 16]            # 10 AM, 2 PM, 4 PM
 BOOKING_MAX_BUSINESS_DAYS = 4         # bookable up to 4 business days ahead
-GOOGLE_CALENDAR_ID = os.environ.get('GOOGLE_CALENDAR_ID', '').strip()
-GOOGLE_SERVICE_ACCOUNT_JSON = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON', '').strip()
+GOOGLE_CALENDAR_ID = os.environ.get('GOOGLE_CALENDAR_ID', 'primary').strip() or 'primary'
+GOOGLE_CLIENT_ID = os.environ.get('GOOGLE_CLIENT_ID', '').strip()
+GOOGLE_CLIENT_SECRET = os.environ.get('GOOGLE_CLIENT_SECRET', '').strip()
+PUBLIC_BASE_URL = os.environ.get('PUBLIC_BASE_URL', '').strip().rstrip('/')
+GOOGLE_OAUTH_SCOPES = "https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/userinfo.email"
+GOOGLE_AUTH_ENDPOINT = "https://accounts.google.com/o/oauth2/v2/auth"
+GOOGLE_TOKEN_ENDPOINT = "https://oauth2.googleapis.com/token"
+GOOGLE_USERINFO_ENDPOINT = "https://www.googleapis.com/oauth2/v2/userinfo"
+
+
+def _oauth_redirect_uri() -> str:
+    return f"{PUBLIC_BASE_URL}/api/oauth/calendar/callback"
 
 # Create the main app without a prefix
 app = FastAPI(title="Cherry Tree Agency API")
@@ -152,42 +163,107 @@ async def _booked_set(date_strs: List[str]) -> set:
     return {(doc["date"], doc["time"]) for doc in docs}
 
 
-def _create_google_event(booking: "Booking") -> Optional[str]:
-    """Create an event in the owner's Google Calendar via a service account.
-    Returns the event id, or None if not configured / on failure."""
-    if not (GOOGLE_SERVICE_ACCOUNT_JSON and GOOGLE_CALENDAR_ID):
+async def _get_stored_tokens() -> Optional[dict]:
+    return await db.oauth_tokens.find_one({"provider": "google_calendar"}, {"_id": 0})
+
+
+async def _save_tokens(data: dict):
+    data["provider"] = "google_calendar"
+    data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.oauth_tokens.update_one(
+        {"provider": "google_calendar"}, {"$set": data}, upsert=True
+    )
+
+
+def _refresh_access_token(refresh_token: str) -> dict:
+    """Exchange a refresh token for a new access token (sync)."""
+    resp = requests.post(GOOGLE_TOKEN_ENDPOINT, data={
+        "client_id": GOOGLE_CLIENT_ID,
+        "client_secret": GOOGLE_CLIENT_SECRET,
+        "refresh_token": refresh_token,
+        "grant_type": "refresh_token",
+    }, timeout=15)
+    resp.raise_for_status()
+    return resp.json()
+
+
+async def _get_valid_access_token() -> Optional[str]:
+    """Return a fresh access token for the connected Google account, or None."""
+    if not (GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET):
+        return None
+    tokens = await _get_stored_tokens()
+    if not tokens or not tokens.get("refresh_token"):
+        return None
+
+    expiry = tokens.get("expiry")
+    now = datetime.now(timezone.utc)
+    if expiry:
+        try:
+            exp_dt = datetime.fromisoformat(expiry)
+            if exp_dt > now + timedelta(seconds=60) and tokens.get("access_token"):
+                return tokens["access_token"]
+        except Exception:  # noqa: BLE001
+            pass
+
+    # refresh
+    try:
+        new_tok = await asyncio.to_thread(_refresh_access_token, tokens["refresh_token"])
+    except Exception as exc:  # noqa: BLE001
+        logging.getLogger(__name__).warning("Token refresh failed: %s", exc)
+        return None
+
+    access_token = new_tok.get("access_token")
+    expires_in = int(new_tok.get("expires_in", 3600))
+    await _save_tokens({
+        "access_token": access_token,
+        "expiry": (now + timedelta(seconds=expires_in)).isoformat(),
+        # keep existing refresh_token; Google may not resend it
+        "refresh_token": new_tok.get("refresh_token", tokens["refresh_token"]),
+    })
+    return access_token
+
+
+def _insert_calendar_event(access_token: str, booking: "Booking") -> Optional[str]:
+    """Create the event via the Calendar REST API with attendee + invite (sync)."""
+    hh, mm = map(int, booking.time.split(":"))
+    y, mo, d = map(int, booking.date.split("-"))
+    tz = _tz()
+    start_dt = datetime(y, mo, d, hh, mm, tzinfo=tz)
+    end_dt = start_dt + timedelta(hours=1)
+
+    body = {
+        "summary": f"Strategy Call — {booking.company}",
+        "description": (
+            f"Name: {booking.name}\n"
+            f"Company: {booking.company}\n"
+            f"Email: {booking.email}\n"
+            f"Phone: {booking.phone}\n"
+            f"Service: {booking.service}\n"
+            f"Notes: {booking.notes or '-'}"
+        ),
+        "start": {"dateTime": start_dt.isoformat(), "timeZone": BOOKING_TZ},
+        "end": {"dateTime": end_dt.isoformat(), "timeZone": BOOKING_TZ},
+        "attendees": [{"email": booking.email, "displayName": booking.name}],
+        "reminders": {"useDefault": True},
+    }
+    resp = requests.post(
+        f"https://www.googleapis.com/calendar/v3/calendars/{GOOGLE_CALENDAR_ID}/events",
+        params={"sendUpdates": "all"},
+        headers={"Authorization": f"Bearer {access_token}", "Content-Type": "application/json"},
+        json=body,
+        timeout=15,
+    )
+    resp.raise_for_status()
+    return resp.json().get("id")
+
+
+async def _create_google_event(booking: "Booking") -> Optional[str]:
+    """Create a calendar event for a booking, or None if not connected / on failure."""
+    access_token = await _get_valid_access_token()
+    if not access_token:
         return None
     try:
-        from google.oauth2 import service_account
-        from googleapiclient.discovery import build
-
-        info = json.loads(GOOGLE_SERVICE_ACCOUNT_JSON)
-        creds = service_account.Credentials.from_service_account_info(
-            info, scopes=["https://www.googleapis.com/auth/calendar"]
-        )
-        service = build("calendar", "v3", credentials=creds, cache_discovery=False)
-
-        hh, mm = map(int, booking.time.split(":"))
-        y, mo, d = map(int, booking.date.split("-"))
-        tz = _tz()
-        start_dt = datetime(y, mo, d, hh, mm, tzinfo=tz)
-        end_dt = start_dt + timedelta(hours=1)
-
-        body = {
-            "summary": f"Strategy Call — {booking.company}",
-            "description": (
-                f"Name: {booking.name}\n"
-                f"Company: {booking.company}\n"
-                f"Email: {booking.email}\n"
-                f"Phone: {booking.phone}\n"
-                f"Service: {booking.service}\n"
-                f"Notes: {booking.notes or '-'}"
-            ),
-            "start": {"dateTime": start_dt.isoformat(), "timeZone": BOOKING_TZ},
-            "end": {"dateTime": end_dt.isoformat(), "timeZone": BOOKING_TZ},
-        }
-        event = service.events().insert(calendarId=GOOGLE_CALENDAR_ID, body=body).execute()
-        return event.get("id")
+        return await asyncio.to_thread(_insert_calendar_event, access_token, booking)
     except Exception as exc:  # noqa: BLE001
         logging.getLogger(__name__).warning("Google Calendar event creation failed: %s", exc)
         return None
@@ -291,7 +367,7 @@ async def create_booking(input: BookingCreate):
         raise HTTPException(status_code=409, detail="That time slot was just booked. Please choose another.")
 
     booking = Booking(**input.model_dump())
-    booking.google_event_id = await asyncio.to_thread(_create_google_event, booking)
+    booking.google_event_id = await _create_google_event(booking)
 
     doc = booking.model_dump()
     doc['created_at'] = doc['created_at'].isoformat()
@@ -306,6 +382,81 @@ async def get_bookings():
         if isinstance(b['created_at'], str):
             b['created_at'] = datetime.fromisoformat(b['created_at'])
     return bookings
+
+
+# ---------- Google Calendar OAuth (owner connects once) ----------
+@api_router.get("/oauth/calendar/login")
+async def calendar_login():
+    if not (GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET and PUBLIC_BASE_URL):
+        raise HTTPException(status_code=503, detail="Google Calendar is not configured yet.")
+    from urllib.parse import urlencode
+    params = {
+        "client_id": GOOGLE_CLIENT_ID,
+        "redirect_uri": _oauth_redirect_uri(),
+        "response_type": "code",
+        "scope": GOOGLE_OAUTH_SCOPES,
+        "access_type": "offline",
+        "prompt": "consent",
+        "include_granted_scopes": "true",
+    }
+    return RedirectResponse(f"{GOOGLE_AUTH_ENDPOINT}?{urlencode(params)}")
+
+
+@api_router.get("/oauth/calendar/callback")
+async def calendar_callback(code: Optional[str] = None, error: Optional[str] = None):
+    if error or not code:
+        return HTMLResponse(f"<h2>Google authorization failed.</h2><p>{error or 'No code returned.'}</p>", status_code=400)
+
+    token_resp = await asyncio.to_thread(lambda: requests.post(GOOGLE_TOKEN_ENDPOINT, data={
+        "code": code,
+        "client_id": GOOGLE_CLIENT_ID,
+        "client_secret": GOOGLE_CLIENT_SECRET,
+        "redirect_uri": _oauth_redirect_uri(),
+        "grant_type": "authorization_code",
+    }, timeout=15).json())
+
+    if "access_token" not in token_resp:
+        return HTMLResponse(f"<h2>Token exchange failed.</h2><pre>{json.dumps(token_resp)}</pre>", status_code=400)
+
+    # Identify the connected account
+    email = None
+    try:
+        user = await asyncio.to_thread(lambda: requests.get(
+            GOOGLE_USERINFO_ENDPOINT,
+            headers={"Authorization": f"Bearer {token_resp['access_token']}"}, timeout=15,
+        ).json())
+        email = user.get("email")
+    except Exception:  # noqa: BLE001
+        pass
+
+    expires_in = int(token_resp.get("expires_in", 3600))
+    save = {
+        "access_token": token_resp["access_token"],
+        "expiry": (datetime.now(timezone.utc) + timedelta(seconds=expires_in)).isoformat(),
+        "scope": token_resp.get("scope", GOOGLE_OAUTH_SCOPES),
+        "email": email,
+    }
+    if token_resp.get("refresh_token"):
+        save["refresh_token"] = token_resp["refresh_token"]
+    await _save_tokens(save)
+
+    return HTMLResponse(
+        f"<div style='font-family:sans-serif;background:#0a0a0a;color:#fff;padding:48px;text-align:center'>"
+        f"<h2>✅ Google Calendar connected{f' as {email}' if email else ''}</h2>"
+        f"<p style='opacity:.7'>Bookings will now be created on your calendar with invites sent to prospects. You can close this tab.</p>"
+        f"</div>"
+    )
+
+
+@api_router.get("/oauth/calendar/status")
+async def calendar_status():
+    tokens = await _get_stored_tokens()
+    configured = bool(GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET and PUBLIC_BASE_URL)
+    return {
+        "configured": configured,
+        "connected": bool(tokens and tokens.get("refresh_token")),
+        "email": tokens.get("email") if tokens else None,
+    }
 
 
 # Include the router in the main app
