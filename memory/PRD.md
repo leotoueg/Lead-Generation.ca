@@ -25,8 +25,11 @@ Build an extremely high-converting, premium landing page for a done-for-you mark
 - Established contractor owners ($1M–$25M+) in roofing, remodeling, HVAC, concrete, landscaping, etc., who want more profitable jobs without managing marketing themselves.
 
 ## Backlog / Next
-- 2026-06: Rebranded to Lead-Generation.ca — new white wordmark logo, full monochrome (black/white/silver) redesign of accents & CTAs, updated SEO/footer, removed "organic social" copy.
-- P1: Wire the real webhook URL (`LEAD_WEBHOOK_URL` in backend/.env) once owner provides it.
-- P1: Replace placeholder VSL + testimonial videos with real YouTube/Vimeo IDs.
-- P2: Optional email notification on new lead (Resend integration).
-- P2: Simple admin view for leads; production CORS hardening; tighten field validation.
+- 2026-06: Rebranded to Lead-Generation.ca — white wordmark logo, full monochrome (black/white/silver) redesign, updated SEO/footer, removed "organic social" copy.
+- 2026-06: Industries set to Roofing / Bathroom Remodeling / Kitchen Remodeling / General Contractors (hero, booking form, FAQ). "Facebook Ads"→"Meta Ads"; added "YouTube Ads" to trust bar marquee.
+- 2026-06: Testimonials now real videos via `VideoPlayer` (supports youtube|loom|vimeo|mp4). Live: Stephen Cruey (Loom), Clint Roberts/Prime Baths NM (mp4 at /public/testimonials/clint.mp4 + clint.jpg poster), Emilio Talavera/Roofing Monkeys (Vimeo 1214123088).
+- 2026-06: Replaced lead form with custom sleek **BookingCalendar** (id="apply", all CTAs point here). Rules: 60-min slots at 10:00/14:00/16:00, Mon–Fri, next 4 business days, tz America/Toronto. Backend `/api/booking/availability`, `POST /api/booking` (double-booking prevention, slot validation), `GET /api/bookings`.
+- 2026-06: Google Calendar via **OAuth** (owner one-time connect). Endpoints: `/api/oauth/calendar/login|callback|status`. Tokens stored in `db.oauth_tokens` (provider=google_calendar) with auto-refresh. On booking, creates event on GOOGLE_CALENDAR_ID (primary) with attendee + `sendUpdates=all` (Google invite emailed). Creds in backend/.env: GOOGLE_CLIENT_ID/SECRET, PUBLIC_BASE_URL, BOOKING_TIMEZONE. OWNER MUST VISIT /api/oauth/calendar/login ONCE to connect (toueg.leo@gmail.com).
+- P1: On deploy, add production redirect URI in Google console + update PUBLIC_BASE_URL.
+- P2: Optional confirmation/notification emails on booking (Resend).
+- P2: Simple admin view for bookings/leads; production CORS hardening.
