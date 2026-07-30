@@ -1,52 +1,34 @@
-import {
-  Building2,
-  Hammer,
-  HardHat,
-  Home,
-  Wrench,
-  PaintRoller,
-  Ruler,
-  Truck,
-  Factory,
-  TreePine,
-  Warehouse,
-  Landmark,
-} from "lucide-react";
-
-// Preview placeholders — swap these for real client logos later.
+// Real client logos rendered on subtle light chips so brand colors stay visible
+// against the dark section background.
 const LOGOS = [
-  { icon: Building2, name: "Summit Build" },
-  { icon: Hammer, name: "IronWorks Co." },
-  { icon: HardHat, name: "Apex Contractors" },
-  { icon: Home, name: "Homestead Reno" },
-  { icon: Wrench, name: "ProFit Trades" },
-  { icon: PaintRoller, name: "TrueCoat" },
-  { icon: Ruler, name: "Precision Bath" },
-  { icon: Truck, name: "Haul & Co." },
-  { icon: Factory, name: "Northgate" },
-  { icon: TreePine, name: "Evergreen Exteriors" },
-  { icon: Warehouse, name: "BuildRight" },
-  { icon: Landmark, name: "Cornerstone" },
+  { src: "/logos/sv.png", name: "SV Developments" },
+  { src: "/logos/rizzi.png", name: "Rizzi Law" },
+  { src: "/logos/roofing-monkeys.png", name: "Roofing Monkeys" },
+  { src: "/logos/apex.png", name: "Apex Bath & Remodeling" },
+  { src: "/logos/prime-baths.png", name: "Prime Baths of NM" },
 ];
 
 export const TrustedBy = () => {
-  const items = [...LOGOS, ...LOGOS];
+  const items = [...LOGOS, ...LOGOS, ...LOGOS];
   return (
     <div className="mt-5 w-full" data-testid="trusted-by">
       <p className="text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40">
         Trusted By
       </p>
       <div className="edge-fade-x relative mt-3 overflow-hidden">
-        <div className="marquee-track marquee-slow items-center gap-10">
+        <div className="marquee-track marquee-slow items-center gap-6">
           {items.map((l, i) => (
             <div
               key={i}
-              className="flex shrink-0 items-center gap-2 text-white/50 transition-colors hover:text-white/80"
+              data-testid={`trusted-logo-${i}`}
+              className="flex h-16 shrink-0 items-center justify-center rounded-xl bg-white px-6 shadow-sm ring-1 ring-black/5 transition-transform duration-300 hover:scale-[1.03]"
             >
-              <l.icon className="h-5 w-5" strokeWidth={1.75} />
-              <span className="whitespace-nowrap text-sm font-semibold tracking-wide">
-                {l.name}
-              </span>
+              <img
+                src={l.src}
+                alt={l.name}
+                loading="lazy"
+                className="h-9 w-auto max-w-[160px] object-contain"
+              />
             </div>
           ))}
         </div>
