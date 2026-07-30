@@ -60,10 +60,10 @@ export const WhyDifferent = () => {
                   className="group relative h-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-white/[0.01] p-8"
                 >
                   <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/15 blur-3xl opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                  <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] shadow-[0_0_30px_-10px_rgba(255,255,255,0.4)]">
-                    <item.icon className="h-6 w-6 text-white" />
+                  <span className="relative flex h-12 w-12 items-center justify-center rounded-2xl border border-[#E6B43C]/25 bg-[#E6B43C]/10 shadow-[0_0_30px_-10px_rgba(230,180,60,0.5)]">
+                    <item.icon className="h-6 w-6 text-[#E6B43C]" />
                   </span>
-                  <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-white">
+                  <h3 className="relative mt-6 font-display text-xl uppercase tracking-tight text-gold">
                     {item.title}
                   </h3>
                   <p className="relative mt-3 text-sm leading-relaxed text-white/55">{item.body}</p>
