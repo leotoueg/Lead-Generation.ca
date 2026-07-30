@@ -220,9 +220,9 @@ export const BookingCalendar = () => {
                     <SelectTrigger data-testid="booking-service" className={inputCls}>
                       <SelectValue placeholder="Select industry" />
                     </SelectTrigger>
-                    <SelectContent className="border-white/10 bg-ink-900 text-white">
+                    <SelectContent className="z-[60] border border-white/10 !bg-[#0c0c0f] text-white shadow-2xl">
                       {SERVICES.map((s) => (
-                        <SelectItem key={s} value={s} className="focus:bg-white/15 focus:text-white">{s}</SelectItem>
+                        <SelectItem key={s} value={s} className="cursor-pointer text-white focus:bg-white/10 focus:text-white data-[highlighted]:bg-white/10">{s}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>

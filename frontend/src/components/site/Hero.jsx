@@ -33,7 +33,7 @@ export const Hero = () => {
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   return (
-    <section id="top" ref={ref} className="relative overflow-hidden pt-24 sm:pt-28" data-testid="hero-section">
+    <section id="top" ref={ref} className="relative overflow-hidden pt-16 sm:pt-20" data-testid="hero-section">
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-[720px]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-brand/20 blur-[160px]" />
 
@@ -50,14 +50,14 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      <div className="relative mx-auto mt-8 grid max-w-7xl grid-cols-1 items-start gap-12 px-5 pb-16 text-center sm:px-8 sm:pb-20 lg:grid-cols-2 lg:gap-12 lg:text-left">
+      <div className="relative mx-auto mt-6 grid max-w-7xl grid-cols-1 items-start gap-8 px-5 pb-12 text-center sm:px-8 sm:pb-16 lg:grid-cols-2 lg:gap-12 lg:text-left">
         {/* Left: copy */}
         <div className="flex flex-col items-center lg:items-start">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
             <span className="text-[11px] uppercase tracking-[0.24em] text-white/70">
@@ -65,7 +65,7 @@ export const Hero = () => {
             </span>
           </motion.div>
 
-          <h1 className="font-display uppercase leading-[0.9] tracking-tight text-5xl sm:text-6xl lg:text-7xl">
+          <h1 className="font-display uppercase leading-[0.9] tracking-tight text-4xl sm:text-5xl lg:text-6xl">
             {HEADLINE.map((line, i) => (
               <span key={i} className="block overflow-hidden py-0.5">
                 <motion.span
@@ -85,7 +85,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-            className="mt-8 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg"
+            className="mt-5 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base"
           >
             We help established contractors generate more profitable jobs with professionally filmed ads,
             paid advertising, CRM automation and sales systems. We fly to you. We build it all. We run it.
@@ -95,7 +95,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.7, ease: EASE }}
-            className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+            className="mt-6 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
           >
             <CTAButton to="apply" data-testid="hero-primary-cta">
               Book Your Strategy Call <ArrowRight className="h-4 w-4" />
@@ -109,7 +109,7 @@ export const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.9 }}
-            className="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:items-center"
+            className="mt-6 flex flex-col items-center gap-4 sm:flex-row sm:gap-6 lg:items-center"
             data-testid="hero-social-proof"
           >
             <div className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export const Hero = () => {
         <motion.div
           id="vsl"
           style={{ y: videoY, scale: videoScale }}
-          className="relative w-full lg:mt-16"
+          className="relative w-full lg:mt-10"
         >
           <div className="rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-2 shadow-[0_40px_120px_-40px_rgba(255,255,255,0.25)] backdrop-blur-xl sm:p-3">
             <VideoPlayer poster={VSL_POSTER} label="Watch how it works" testid="hero-vsl" />
