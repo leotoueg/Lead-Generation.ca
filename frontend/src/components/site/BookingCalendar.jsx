@@ -42,14 +42,19 @@ export const BookingCalendar = () => {
     axios
       .get(`${API}/booking/availability`)
       .then(({ data }) => {
-        setAvail(data);
-        const firstOpen = data.days.find((d) => d.slots.some((s) => s.available));
+        const days = Array.isArray(data?.days) ? data.days : [];
+        setAvail({ timezone: data?.timezone, days });
+        const firstOpen = days.find((d) => Array.isArray(d?.slots) && d.slots.some((s) => s.available));
         if (firstOpen) setSelDate(firstOpen.date);
       })
-      .catch(() => toast.error("Couldn't load available times. Please refresh."));
+      .catch(() => {
+        setAvail({ days: [] });
+        toast.error("Couldn't load available times. Please refresh.");
+      });
   }, []);
 
-  const currentDay = avail?.days.find((d) => d.date === selDate);
+  const days = Array.isArray(avail?.days) ? avail.days : [];
+  const currentDay = days.find((d) => d.date === selDate);
   const tzLabel = avail ? tzShort(avail.timezone) : "";
 
   const chooseDate = (date) => {
@@ -71,7 +76,7 @@ export const BookingCalendar = () => {
     setLoading(true);
     try {
       const { data } = await axios.post(`${API}/booking`, { ...form, date: selDate, time: selTime });
-      const slotLabel = currentDay?.slots.find((s) => s.time === selTime)?.label;
+      const slotLabel = (currentDay?.slots ?? []).find((s) => s.time === selTime)?.label;
       setDone({ label: currentDay?.label, time: slotLabel, tz: tzLabel });
       setForm(EMPTY);
       setSelTime(null);
@@ -123,15 +128,19 @@ export const BookingCalendar = () => {
                   <span className="text-xs font-semibold uppercase tracking-[0.16em]">Select a day</span>
                 </div>
 
-                {!avail ? (
+                {avail === null ? (
                   <div className="mt-6 flex h-40 items-center justify-center text-white/40">
                     <Loader2 className="h-6 w-6 animate-spin" />
                   </div>
+                ) : days.length === 0 ? (
+                  <p className="mt-6 text-sm text-white/50" data-testid="booking-no-times">
+                    No times available right now — please check back soon or reach out directly.
+                  </p>
                 ) : (
                   <>
                     <div className="mt-5 grid grid-cols-4 gap-2" data-testid="booking-days">
-                      {avail.days.map((d) => {
-                        const anyOpen = d.slots.some((s) => s.available);
+                      {days.map((d) => {
+                        const anyOpen = Array.isArray(d.slots) && d.slots.some((s) => s.available);
                         const activeDay = d.date === selDate;
                         return (
                           <button
@@ -162,7 +171,7 @@ export const BookingCalendar = () => {
                     </div>
                     <div className="mt-4 grid grid-cols-1 gap-3" data-testid="booking-slots">
                       <AnimatePresence mode="popLayout">
-                        {currentDay?.slots.map((s) => (
+                        {(currentDay?.slots ?? []).map((s) => (
                           <motion.button
                             key={`${selDate}-${s.time}`}
                             type="button"
@@ -230,7 +239,7 @@ export const BookingCalendar = () => {
 
                 {selDate && selTime && (
                   <div className="rounded-xl border border-white/15 bg-white/[0.04] px-4 py-3 text-sm text-white/80" data-testid="booking-selection-summary">
-                    <span className="text-white/50">Selected:</span> {currentDay?.label} · {currentDay?.slots.find((s) => s.time === selTime)?.label}
+                    <span className="text-white/50">Selected:</span> {currentDay?.label} · {(currentDay?.slots ?? []).find((s) => s.time === selTime)?.label}
                   </div>
                 )}
 
