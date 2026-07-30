@@ -1,0 +1,35 @@
+{
+  "summary": "Backend-only verification of Lead-Generation.ca OAuth + booking endpoints (no DB). 7/7 pytest tests passed against the external preview URL. Confirmed the redirect_uri emitted by /api/oauth/calendar/login exactly equals 'https://cherry-tree-agency.preview.emergentagent.com/api/oauth/calendar/callback' (no trailing slash, https). Booking degrades gracefully to 503 while Google Calendar is disconnected; invalid/past slots return 400. This confirms the reported 'redirect_uri_mismatch' is an external Google Console registration issue, not a backend defect.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Owner must register the redirect URI 'https://cherry-tree-agency.preview.emergentagent.com/api/oauth/calendar/callback' EXACTLY in Google Cloud Console → OAuth 2.0 Client → Authorized redirect URIs. After registering, complete the /api/oauth/calendar/login flow to obtain GOOGLE_REFRESH_TOKEN and set it in backend/.env, then restart backend."
+  ],
+  "critical_code_review_comments": [
+    "server.py mutates the module-global GOOGLE_REFRESH_TOKEN in calendar_callback() but does not persist it to .env; a container restart will lose the session-only connection. Consider writing the refresh token to disk or clearly documenting the manual .env update (which the callback HTML does).",
+    "CORS is set to allow_origins='*' with allow_credentials=True — invalid combination per CORS spec; browsers will reject. Restrict to specific origin(s) when credentials are enabled.",
+    "requests calls are wrapped in asyncio.to_thread (good), but no retries/backoff on Google API 5xx. Low priority since traffic is low.",
+    "d.strftime('%-d') in booking_availability is Linux-only; not portable to Windows but fine for this container."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "not tested (per request)"},
+  "test_credentials": "none required (all endpoints public)",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend has no DB. Redirect URI emitted is the exact expected value. Once owner adds it in Google Console and completes OAuth to populate GOOGLE_REFRESH_TOKEN, /api/oauth/calendar/status should return connected=true, token_ok=true, and POST /api/booking should return 200 with a google_event_id.",
+  "rca of the issue": "User's 'Error 400: redirect_uri_mismatch' is caused by Google Console NOT having 'https://cherry-tree-agency.preview.emergentagent.com/api/oauth/calendar/callback' registered as an Authorized redirect URI for the OAuth client 555647542880-....apps.googleusercontent.com. Backend correctly constructs this URI from PUBLIC_BASE_URL. Mitigation: add the exact URI (no trailing slash, https scheme) in Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client ID → Authorized redirect URIs, save, wait ~1 minute, retry."
+}
