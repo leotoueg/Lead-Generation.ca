@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: leadgen-backend
+    runtime: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: DB_NAME
+        value: leadgen
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: BOOKING_TIMEZONE
+        value: America/Toronto
+      - key: GOOGLE_CALENDAR_ID
+        value: primary
+      # The values below are secrets / environment-specific.
+      # Render will prompt you to enter them when you create the Blueprint.
+      - key: MONGO_URL
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_CLIENT_SECRET
+        sync: false
+      - key: LEAD_WEBHOOK_URL
+        sync: false
