@@ -33,7 +33,7 @@ export const Hero = () => {
   const videoScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
 
   return (
-    <section id="top" ref={ref} className="relative overflow-hidden pt-16 sm:pt-20 lg:flex lg:min-h-[90vh] lg:flex-col lg:justify-center lg:pt-24" data-testid="hero-section">
+    <section id="top" ref={ref} className="relative overflow-hidden pt-16 sm:pt-20 lg:flex lg:min-h-[92vh] lg:flex-col lg:justify-start lg:pt-24" data-testid="hero-section">
       <div className="glow-radial pointer-events-none absolute inset-x-0 top-0 h-[720px]" />
       <div className="pointer-events-none absolute left-1/2 top-24 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-brand/20 blur-[160px]" />
 
@@ -50,22 +50,22 @@ export const Hero = () => {
         </motion.div>
       </div>
 
-      <div className="relative mx-auto mt-6 grid max-w-7xl grid-cols-1 items-start gap-8 px-5 pb-12 text-center sm:px-8 sm:pb-16 lg:mt-8 lg:grid-cols-2 lg:items-center lg:gap-12 lg:pb-0 lg:text-left">
+      <div className="relative mx-auto mt-6 grid max-w-7xl grid-cols-1 items-start gap-8 px-5 pb-12 text-center sm:px-8 sm:pb-16 lg:mt-12 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-14 lg:pb-0 lg:text-left">
         {/* Left: copy */}
         <div className="flex flex-col items-center lg:items-start">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 backdrop-blur-xl lg:px-5 lg:py-2"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-brand-accent" />
-            <span className="text-[11px] uppercase tracking-[0.24em] text-white/70">
+            <span className="text-[11px] uppercase tracking-[0.24em] text-white/70 lg:text-xs">
               Done-for-you growth for established contractors
             </span>
           </motion.div>
 
-          <h1 className="font-display uppercase leading-[0.9] tracking-tight text-4xl sm:text-5xl lg:text-6xl">
+          <h1 className="font-display uppercase leading-[0.9] tracking-tight text-4xl sm:text-5xl lg:text-7xl">
             {HEADLINE.map((line, i) => (
               <span key={i} className="block overflow-hidden py-0.5">
                 <motion.span
@@ -85,7 +85,7 @@ export const Hero = () => {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.55, ease: EASE }}
-            className="mt-5 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base"
+            className="mt-6 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg lg:mt-7 lg:text-xl"
           >
             We help established contractors generate more profitable jobs with professionally filmed ads,
             paid advertising, CRM automation and sales systems. We fly to you. We build it all. We run it.
@@ -109,13 +109,13 @@ export const Hero = () => {
             transition={{ duration: 0.7, delay: 0.7, ease: EASE }}
             className="mt-6 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
           >
-            <CTAButton to="apply" data-testid="hero-primary-cta">
+            <CTAButton to="apply" className="whitespace-nowrap" data-testid="hero-primary-cta">
               Book Your Strategy Call <ArrowRight className="h-4 w-4" />
             </CTAButton>
             <CTAButton
               to="vsl"
               variant="glass"
-              className="hidden lg:inline-flex"
+              className="hidden whitespace-nowrap lg:inline-flex"
               data-testid="hero-secondary-cta"
             >
               Watch The Video
@@ -141,3 +141,4 @@ export const Hero = () => {
 };
 
 export default Hero;
+
