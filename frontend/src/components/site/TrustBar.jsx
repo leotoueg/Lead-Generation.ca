@@ -13,7 +13,7 @@ export const TrustBar = () => {
   const loop = [...ITEMS, ...ITEMS];
   return (
     <section
-      className="relative border-y border-white/10 bg-black/40 py-8"
+      className="relative border-y border-white/10 bg-black/40 py-8 lg:mt-14"
       data-testid="trust-bar"
       aria-label="Capabilities"
     >
